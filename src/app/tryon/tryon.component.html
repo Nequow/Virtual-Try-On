@@ -1,0 +1,116 @@
+<div class="container mx-auto max-w-4xl p-6">
+  <z-card
+    [zTitle]="'Virtual Try-On'"
+    [zDescription]="'Upload a garment image and run prediction.'"
+    [class]="'w-full'"
+  >
+    <div class="space-y-4">
+      <input z-input
+          id="garmentInput"
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          class="block border-0 p-0 w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-primary file:px-4 file:py-2 file:text-primary-foreground file:font-medium hover:file:opacity-90 file:cursor-pointer"
+        />
+
+      <div *ngIf="garmentPreviewUrl" class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">Garment preview</h3>
+        <div class="relative inline-block">
+          <img [src]="garmentPreviewUrl" alt="Selected garment" class="w-full max-w-sm rounded-md border" />
+          <button
+            type="button"
+            (click)="removeGarment()"
+            aria-label="Retirer le vêtement"
+            class="absolute -top-2 -right-2 rounded-full bg-white text-destructive items-center justify-center hover:opacity-80 cursor-pointer"
+          >
+            <lucide-angular [img]="CircleX"></lucide-angular>
+          </button>
+        </div>
+      </div>
+      
+      <input z-input
+          id="modelsInput"
+          type="file"
+          (change)="onModelsSelected($event)"
+          accept="image/*"
+          multiple
+          class="block border-0 p-0 w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-secondary file:px-4 file:py-2 file:text-secondary-foreground file:font-medium hover:file:opacity-90 file:cursor-pointer"
+        /> 
+
+
+      <div *ngIf="modelPreviews.length > 0" class="space-y-2">
+        <h3 class="text-sm font-medium text-muted-foreground">Model(s) selected</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div *ngFor="let m of modelPreviews; index as i" class="space-y-1">
+            <div class="relative">
+              <img [src]="m.url" [alt]="m.name" class="w-full rounded-md border" />
+              <button
+                type="button"
+                (click)="removeModelAt(i)"
+                aria-label="Retirer ce modèle"
+                class="absolute -top-2 -right-2 rounded-full bg-white text-destructive items-center justify-center hover:opacity-80 cursor-pointer"
+              >
+                <lucide-angular [img]="CircleX"></lucide-angular>
+              </button>
+            </div>
+            <p class="text-xs text-muted-foreground truncate">{{ m.name }}</p>
+          </div>
+        </div>
+      </div>
+
+      <button z-button
+        zType="outline"
+        class="cursor-pointer"
+        (click)="startPrediction()"
+        [disabled]="isLoading || !selectedGarment"
+      >
+        <ng-container *ngIf="!isLoading; else loadingTemplate">
+          Start Virtual Try-On
+        </ng-container>
+        <ng-template #loadingTemplate>
+          <ng-container *ngIf="selectedModels.length > 0; else singleLoading">
+            Processing {{ results.length }}/{{ selectedModels.length }} model(s)...
+          </ng-container>
+          <ng-template #singleLoading>
+            Please wait, the prediction is in progress...
+          </ng-template>
+        </ng-template>
+      </button>
+
+      <div class="space-y-2">
+        <h3 *ngIf="isLoading || results.length > 0" class="text-lg font-semibold">
+          Results 
+          <span>
+            ({{ results.length }}/{{ selectedModels.length }})
+          </span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <!-- Real results -->
+          <ng-container *ngFor="let r of results">
+            <div class="space-y-1">
+              <img [src]="r.url" [alt]="r.name" class="w-full rounded-md border" />
+              <p class="text-xs text-muted-foreground truncate">{{ r.name }}</p>
+            </div>
+          </ng-container>
+          
+          <!-- Skeleton loaders for pending predictions -->
+          <ng-container *ngIf="isLoading">
+            <div *ngFor="let _ of [].constructor(selectedModels.length - results.length)" class="space-y-2">
+              <z-skeleton class="aspect-[3/4] w-full rounded-md" />
+              <z-skeleton class="h-4 w-3/4 rounded" />
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div *ngIf="resultImageUrl" class="space-y-2">
+        <h3 class="text-lg font-semibold">Resssult</h3>
+        <img [src]="resultImageUrl" alt="Virtual Try-On Result" class="w-full max-w-2xl mx-auto rounded-md border" />
+      </div>
+
+      <div *ngIf="error" class="rounded-md bg-destructive/10 p-3 text-destructive text-sm">
+        {{ error }}
+      </div>
+    </div>
+  </z-card>
+</div>
