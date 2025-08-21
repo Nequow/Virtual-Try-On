@@ -12,7 +12,7 @@ And last things, don't forget to change the public url of the gradio demo of the
 
 The gradioUrl variable should be something like `https://ffe05d90ebf57db702.gradio.live`.
 
-As a security measure, I give you an exemple of the `app.py` file of the IDM-VTON project in the root directory of this project called [`app.txt`](app.txt) which is normally already configured to run on a 8GB GPU.
+As a help measure, I give you an exemple of the `app.py` file of the IDM-VTON project in the root directory of this project called [`app.txt`](app.txt) which is normally already configured to run on a 8GB GPU. Copy the content of the file and paste it in the `gradio_demo/app.py` file of the IDM-VTON project.
 
 To install the project, run:
 
