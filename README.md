@@ -1,6 +1,24 @@
-# GradioApp
+# Virtual Try On
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+## To know before running the project
+This project need the installation of IDM-VTON model. So, follow the instructions in the [IDM-VTON](https://github.com/yisol/IDM-VTON) repository to install and run the gradio demo of the project.
+
+IDM-VTON needs a GPU for at least 8GB of VRAM to run if you follow these [instructions](https://github.com/yisol/IDM-VTON/issues/63) to finetune the original implementation.
+
+## Installation
+Once again, make sure that the gradio demo of the IDM-VTON is running before running this project and it has a public url. To do so, you have to set `image_blocks.launch(share=True)` in the `gradio_demo/app.py` file of the IDM-VTON project.
+
+And last things, don't forget to change the public url of the gradio demo of the IDM-VTON in the `src/app/gradio.service.ts` file of this project in the `gradioUrl` variable.
+
+The gradioUrl variable should be something like `https://ffe05d90ebf57db702.gradio.live`.
+
+As a security measure, I give you an exemple of the `app.py` file of the IDM-VTON project in the root directory of this project called [`app.txt`](app.txt) which is normally already configured to run on a 8GB GPU.
+
+To install the project, run:
+
+```bash
+npm install
+```
 
 ## Development server
 
