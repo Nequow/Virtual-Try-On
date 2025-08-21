@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class GradioService {
   private client: any;
-  private readonly gradioUrl = 'https://ffe05d90ebf57db702.gradio.live';
+  private readonly gradioUrl = 'http://localhost:7860';
 
   constructor(private http: HttpClient) {
     this.initializeClient();

@@ -1,0 +1,17 @@
+# Node modules
+node_modules
+
+# Git files
+.git
+.gitignore
+
+# Angular cache and build output
+.angular
+dist
+
+# IDE files
+.vscode
+
+# Docker files
+Dockerfile
+.dockerignore
