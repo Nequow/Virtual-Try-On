@@ -5,6 +5,8 @@ This project need the installation of IDM-VTON model. So, follow the instruction
 
 IDM-VTON needs a GPU for at least 8GB of VRAM to run if you follow these [instructions](https://github.com/yisol/IDM-VTON/issues/63) to finetune the original implementation.
 
+TIPS: You don't to install the different dataset for the IDM-VTON project. But, it's compulsory to install the checkpoint of the IDM-VTON model. Follow the instructions in the [IDM-VTON](https://github.com/yisol/IDM-VTON) repository to install the checkpoint and put them in the `ckpt` directory of the IDM-VTON project in their corresponding subfolders.
+
 Once again, make sure that the gradio demo of the IDM-VTON is running before running this project and it has a public url. To do so, you have to set `image_blocks.launch(share=True)` in the `gradio_demo/app.py` file of the IDM-VTON project.
 
 And last things, don't forget to change the public url of the gradio demo of the IDM-VTON in the `src/app/gradio.service.ts` file of this project in the `gradioUrl` variable.
