@@ -90,7 +90,7 @@ export class GradioService {
       return result.data;
     } catch (error) {
       console.error('Prediction failed:', error);
-      return { error: 'Prediction failed' };
+      return { error: 'Prediction failed: ' + error };
     }
   }
 }
